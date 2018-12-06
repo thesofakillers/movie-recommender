@@ -12,6 +12,11 @@ def home():
 def profile():
     return render_template('profile.html', title = 'Profile')
 
+# where user may browse movies and rate them
+@app.route("/browse")
+def browse():
+    return render_template('browse.html', title = 'Browse')
+
 # where movie reccomendations will be handled
 @app.route("/reccomend")
 def reccomend():
