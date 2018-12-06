@@ -1,4 +1,42 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Home Page</h1>
+<div class="row">
+  <div class="col jumbotron text-center">
+    <h1 class="display-1">
+      <a class="logo" href="/">Pellicola</a>
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-2 labeled-button text-center">
+    <a href="/browse"><i class="fas fa-hands"></i></a>
+    <p>Browse Films</p>
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-2 labeled-button text-center">
+    <a href="/profile"><i class="fas fa-users"></i></a>
+    <p>Profiles</p>
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-2 labeled-button text-center">
+    <a href="/browse"><i class="fas fa-list-ul"></i></a>
+    <p>Browse Films</p>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+<div class="row">
+  <div class="col-3">
+  </div>
+  <div class="col-6 text-justify lead">
+    Pellicola is a movie recommendation website. Create a profile,
+    rate a few films and let us do the rest. Via a bespoke recommendation
+    algorithm, we sort through similar users and movies, and provide you with
+    movies that we believe you will enjoy. Try us out!.
+  </div>
+  <div class="co-3">
+
+  </div>
+</div>
+
 {% endblock content %}
