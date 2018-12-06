@@ -3,6 +3,7 @@ app = Flask(__name__)
 
 #<section>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Routes~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # website home page
+@app.route("/home")
 @app.route("/")
 def home():
     return render_template('home.html')
