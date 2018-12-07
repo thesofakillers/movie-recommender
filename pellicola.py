@@ -40,7 +40,7 @@ def register():
 
 # where logging in will be handled
 @app.route("/login")
-def register():
+def login():
     form = LoginForm()
     return render_template('login.html',title="Log In", form = form)
 #</section> End of Routes
