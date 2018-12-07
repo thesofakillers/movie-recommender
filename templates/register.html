@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class=row>
+  <div class="col-5">
+  </div>
+  <div class="col">
+    <form action="" method="POST">
+      <!-- necessary for CSRF token -->
+      {{ form.hidden_tag()}}
+      <fieldset class="form-group">
+        <legend class='mb-4'>Join Us!</legend>
+        <div class="form-group">
+          <!-- prints out username label -->
+          {{ form.username.label(class="form-control-label")}}
+          <!-- provides actual username form entry -->
+          {{ form.username(class="form-control form-control-lg")}}
+        </div>
+        <div class="form-group">
+          <!-- prints out email label -->
+          {{ form.email.label(class="form-control-label")}}
+          <!-- provides actual email form entry -->
+          {{ form.email(class="form-control form-control-lg")}}
+        </div>
+        <div class="form-group">
+          <!-- prints out password label -->
+          {{ form.password.label(class="form-control-label")}}
+          <!-- provides actual password form entry -->
+          {{ form.password(class="form-control form-control-lg")}}
+        </div>
+        <div class="form-group">
+          <!-- prints out confirm password label -->
+          {{ form.confirm_password.label(class="form-control-label")}}
+          <!-- provides actual confirm password form entry -->
+          {{ form.confirm_password(class="form-control form-control-lg")}}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-primary")}}
+      </div>
+    </form>
+  </div>
+  <div class="col-5">
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-12 text-center">
+    <small class='text-muted'>
+      Already with us?
+      <a class="ml-2" href="{{url_for('login')}}">Sign In</a>
+    </small>
+  </div>
+</div>
+{% endblock content %}
