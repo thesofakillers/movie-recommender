@@ -43,14 +43,20 @@ def register():
         # create a succesful alert message
         flash("account created for {}!".format(form.username.data), "success")
         # and redirect the user home
-        return redirect("/")
+        return redirect(redirect(url_for('home')))
     # render register.html at this particular route (GET)
     return render_template('register.html',title="Register", form = form)
 
 # where logging in will be handled
-@app.route("/login")
+@app.route("/login", methods =['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        # if username and password match
+        #    return(redirect(url_for('home')))
+        # else:
+        #     flash('unsuccesful login', 'danger')
+        pass
     return render_template('login.html',title="Log In", form = form)
 #</section> End of Routes
 
