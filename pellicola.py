@@ -19,7 +19,7 @@ def browse():
     return render_template('browse.html', title = 'Browse')
 
 # where movie reccomendations will be handled
-@app.route("/reccomend")
+@app.route("/recommend")
 def reccomend():
     return render_template('recommend.html', title = 'For You')
 #</section> End of Routes
