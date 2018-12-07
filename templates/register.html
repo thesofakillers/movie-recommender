@@ -12,26 +12,74 @@
         <div class="form-group">
           <!-- prints out username label -->
           {{ form.username.label(class="form-control-label")}}
-          <!-- provides actual username form entry -->
-          {{ form.username(class="form-control form-control-lg")}}
+          <!-- catch errors -->
+          {% if form.username.errors %} <!-- if there are any -->
+            <!-- highlights where the error is -->
+            {{ form.username(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+              <!-- prints out all the errors -->
+              {% for error in form.username.errors %}
+               <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %} <!-- if there are no errors -->
+            <!-- provides actual username field entry -->
+            {{ form.username(class="form-control form-control-lg")}}
+          {% endif %}
         </div>
         <div class="form-group">
           <!-- prints out email label -->
           {{ form.email.label(class="form-control-label")}}
-          <!-- provides actual email form entry -->
-          {{ form.email(class="form-control form-control-lg")}}
+          <!-- catch errors -->
+          {% if form.email.errors %} <!-- if there are any -->
+            <!-- highlights where the error is -->
+            {{ form.email(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+              <!-- prints out all the errors -->
+              {% for error in form.email.errors %}
+               <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %} <!-- if there are no errors -->
+            <!-- provides actual email field entry -->
+            {{ form.email(class="form-control form-control-lg")}}
+          {% endif %}
         </div>
         <div class="form-group">
           <!-- prints out password label -->
           {{ form.password.label(class="form-control-label")}}
-          <!-- provides actual password form entry -->
-          {{ form.password(class="form-control form-control-lg")}}
+          <!-- catch errors -->
+          {% if form.password.errors %} <!-- if there are any -->
+            <!-- highlights where the error is -->
+            {{ form.password(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+              <!-- prints out all the errors -->
+              {% for error in form.password.errors %}
+               <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %} <!-- if there are no errors -->
+            <!-- provides actual password field entry -->
+            {{ form.password(class="form-control form-control-lg")}}
+          {% endif %}
         </div>
         <div class="form-group">
           <!-- prints out confirm password label -->
           {{ form.confirm_password.label(class="form-control-label")}}
-          <!-- provides actual confirm password form entry -->
-          {{ form.confirm_password(class="form-control form-control-lg")}}
+          <!-- catch errors -->
+          {% if form.confirm_password.errors %} <!-- if there are any -->
+            <!-- highlights where the error is -->
+            {{ form.confirm_password(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+              <!-- prints out all the errors -->
+              {% for error in form.confirm_password.errors %}
+               <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %} <!-- if there are no errors -->
+            <!-- provides actual confirm_password field entry -->
+            {{ form.confirm_password(class="form-control form-control-lg")}}
+          {% endif %}
         </div>
       </fieldset>
       <div class="form-group">
