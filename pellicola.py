@@ -1,6 +1,7 @@
 #<section>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Imports~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
+import sys #for printing
 #</section> End of Imports
 
 
@@ -33,9 +34,17 @@ def reccomend():
     return render_template('recommend.html', title = 'For You')
 
 # where registration will be handled
-@app.route("/register")
+@app.route("/register", methods =['GET', 'POST'])
 def register():
+    # create form instance
     form = RegistrationForm()
+    # if we receive a POST and it passes validations (set in RegistrationForm)
+    if form.validate_on_submit():
+        # create a succesful alert message
+        flash("account created for {}!".format(form.username.data), "success")
+        # and redirect the user home
+        return redirect("/")
+    # render register.html at this particular route (GET)
     return render_template('register.html',title="Register", form = form)
 
 # where logging in will be handled
