@@ -30,7 +30,7 @@ def browse():
 
 # where movie reccomendations will be handled
 @app.route("/recommend")
-def reccomend():
+def recommend():
     return render_template('recommend.html', title = 'For You')
 
 # where registration will be handled

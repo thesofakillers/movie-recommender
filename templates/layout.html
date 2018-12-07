@@ -28,7 +28,7 @@
     <!-- Site Header to Be Displayed on All pages -->
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-tomato fixed-top">
-        <a class="navbar-brand logo mr-4" href="/">Pellicola</a>
+        <a class="navbar-brand logo mr-4" href="{{url_for('home')}}">Pellicola</a>
         <!-- For the Hamburger Menu for smaller displays -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -36,15 +36,15 @@
         <!-- Handles placement of extra options into hamburger menu when resizing -->
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="/">Home</a>
-            <a class="nav-item nav-link" href="/browse">Browse</a>
-            <a class="nav-item nav-link" href="/profile">Profile</a>
-            <a class="nav-item nav-link" href="/reccomend">For you</a>
+            <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
+            <a class="nav-item nav-link" href="{{url_for('browse')}}">Browse</a>
+            <a class="nav-item nav-link" href="{{url_for('profile')}}">Profile</a>
+            <a class="nav-item nav-link" href="{{url_for('recommend')}}">For you</a>
           </div>
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/login">Login</a>
-            <a class="nav-item nav-link" href="/register">Register</a>
+            <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
+            <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
           </div>
         </div>
       </nav>
