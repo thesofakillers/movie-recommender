@@ -3,7 +3,11 @@ from flask import Flask, render_template, url_for
 #</section> End of Imports
 
 
+# create flask app instance
 app = Flask(__name__)
+
+# secret key for security -- will change to environment variable approach later
+app.config['SECRET_KEY'] = '49771b76aa833ea4d801e6398d51f3b7'
 
 #<section>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Routes~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # website home page
