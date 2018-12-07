@@ -1,5 +1,6 @@
 #<section>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Imports~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 from flask import Flask, render_template, url_for
+from forms import RegistrationForm, LoginForm
 #</section> End of Imports
 
 
@@ -30,6 +31,18 @@ def browse():
 @app.route("/recommend")
 def reccomend():
     return render_template('recommend.html', title = 'For You')
+
+# where registration will be handled
+@app.route("/register")
+def register():
+    form = RegistrationForm()
+    return render_template('register.html',title="Register", form = form)
+
+# where logging in will be handled
+@app.route("/login")
+def register():
+    form = LoginForm()
+    return render_template('login.html',title="Log In", form = form)
 #</section> End of Routes
 
 # to allow server to be run with "python pellicola.py" -- no need for ENV vars
