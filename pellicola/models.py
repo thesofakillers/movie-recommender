@@ -3,10 +3,15 @@ Maintains the class definitions (i.e. tables) for the models in the Database
 """
 
 
-from pellicola import db
+from pellicola import db, login_manager
+from flask_login import UserMixin
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """
     Each user will mandatorily have an id and image
     Username/Email/passwords are optional since we are feeding the DB with a

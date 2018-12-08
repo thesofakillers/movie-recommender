@@ -7,7 +7,7 @@ from flask import render_template, url_for, flash, redirect
 from pellicola import app, db, bcrypt
 from pellicola.forms import RegistrationForm, LoginForm
 from pellicola.models import User, Rating, Movie
-
+from flask_login import login_user, current_user
 
 @app.route("/home")
 @app.route("/")
@@ -37,6 +37,9 @@ def recommend():
 @app.route("/register", methods=['GET', 'POST'])
 # where registration will be handled
 def register():
+    # check if user is already logged in
+    if current_user.is_authenticated():
+        return(redirect(url_for('home')))
     # create form instance
     form = RegistrationForm()
     # if we receive a POST and it passes validations (set in RegistrationForm)
@@ -61,11 +64,22 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 # where logging in will be handled
 def login():
+    # check if user is already logged in
+    if current_user.is_authenticated():
+        return(redirect(url_for('home')))
+    # create form instance
     form = LoginForm()
+    # if we receive a POST and it passes validations (set in LoginForm)
     if form.validate_on_submit():
-        # if username and password match
-        #    return(redirect(url_for('home')))
-        # else:
-        #     flash('unsuccesful login', 'danger')
-        pass
+        # search for email in database
+        user = User.query.filter_by(email=form.email.data).first()
+        # check if email exists and whether the passwords match
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            # login user
+            login_user(user, remember = form.remember.data)
+            # redirect home
+            return redirect(url_for("home"))
+        else: # if login fails
+            # provide feedback
+            flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title="Log In", form=form)

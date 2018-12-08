@@ -6,7 +6,7 @@ Packages the web app
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-
+from flask_login import LoginManager
 
 # create flask app instance
 app = Flask(__name__)
@@ -21,5 +21,9 @@ db = SQLAlchemy(app)
 
 # create Bcrypt instance
 bcrypt = Bcrypt(app)
+
+# create LoginManager instance
+login_manager = LoginManager(app)
+
 
 from pellicola import routes
