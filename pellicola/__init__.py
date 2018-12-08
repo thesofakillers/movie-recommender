@@ -5,7 +5,7 @@ Packages the web app
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import sys  # for printing
+from flask_bcrypt import Bcrypt
 
 
 # create flask app instance
@@ -18,5 +18,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 # creates database instance
 db = SQLAlchemy(app)
+
+# create Bcrypt instance
+bcrypt = Bcrypt(app)
 
 from pellicola import routes

@@ -4,7 +4,7 @@ Handles the routing of the web app
 
 
 from flask import render_template, url_for, flash, redirect
-from pellicola import app
+from pellicola import app, db, bcrypt
 from pellicola.forms import RegistrationForm, LoginForm
 from pellicola.models import User, Rating, Movie
 
@@ -41,10 +41,19 @@ def register():
     form = RegistrationForm()
     # if we receive a POST and it passes validations (set in RegistrationForm)
     if form.validate_on_submit():
+        # hash password
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        # create user instance with hashed_password
+        user = User(username=form.username.data,
+                    email=form.email.data, password=hashed_password)
+        # add user to database
+        db.session.add(user)
+        db.session.commit()
         # create a succesful alert message
-        flash("account created for {}!".format(form.username.data), "success")
-        # and redirect the user home
-        return redirect(url_for('home'))
+        flash("Your account has been created, you may now Log In.", "success")
+        # and redirect the user to login page
+        return redirect(url_for('login'))
     # render register.html at this particular route (GET)
     return render_template('register.html', title="Register", form=form)
 

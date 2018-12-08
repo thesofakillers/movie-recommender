@@ -12,7 +12,7 @@ class User(db.Model):
     Username/Email/passwords are optional since we are feeding the DB with a
     series of users which are missing this data
     """
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=True)
     email = db.Column(db.String(254), unique=True, nullable=True)
     image_file = db.Column(db.String(20), unique=False,
