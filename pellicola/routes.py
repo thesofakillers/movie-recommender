@@ -6,7 +6,7 @@ Handles the routing of the web app
 from flask import render_template, url_for, flash, redirect, request
 from pellicola import app, db, bcrypt
 from pellicola.forms import RegistrationForm, LoginForm
-from pellicola.models import User, Rating, Movie
+from pellicola.models import ratings, User, Movie, MovieGenre
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/home")
