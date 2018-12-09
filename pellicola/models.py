@@ -52,8 +52,16 @@ class Movie(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
-    genre = db.Column(db.String(20), nullable=False)
+    genres = db.relationship('MovieGenre', backref='movie', lazy='dynamic')
 
     def __repr__(self):
         """Define what the class should look like when printing out instance"""
         return "Movie({}, {})".format(self.id, self.title)
+
+class MovieGenre(db.Model):
+    genre = db.Column(db.String(100), primary_key=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
+
+    def __repr__(self):
+        """Define what the class should look like when printing out instance"""
+        return "MovieGenre({}, {})".format(self.movie_id, self.genre)
