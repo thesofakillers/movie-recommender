@@ -3,24 +3,24 @@
 <div class="row">
   <div class="col jumbotron text-center">
     <h1 class="display-1">
-      <a class="logo" href="/">Pellicola</a>
+      <a class="logo" href="{{url_for('home')}}">Pellicola</a>
     </h1>
   </div>
 </div>
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-2 labeled-button text-center">
-    <a href="/recommend"><i class="fas fa-hands"></i></a>
+    <a href="{{url_for('recommend')}}"><i class="fas fa-hands"></i></a>
     <p>Get Recommendations</p>
   </div>
   <div class="col-md-1"></div>
   <div class="col-md-2 labeled-button text-center">
-    <a href="/profile"><i class="fas fa-users"></i></a>
+    <a href="{{url_for('profile')}}"><i class="fas fa-users"></i></a>
     <p>Profile</p>
   </div>
   <div class="col-md-1"></div>
   <div class="col-md-2 labeled-button text-center">
-    <a href="/browse"><i class="fas fa-list-ul"></i></a>
+    <a href="{{url_for('browse')}}"><i class="fas fa-list-ul"></i></a>
     <p>Browse Films</p>
   </div>
   <div class="col-md-2"></div>
