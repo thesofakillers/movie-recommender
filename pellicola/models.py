@@ -25,6 +25,9 @@ class Rating(db.Model):
     user = db.relationship('User', back_populates='movies')
     movie = db.relationship('Movie', back_populates='users')
 
+    def __repr__(self):
+        """Define what the class should look like when printing out instance"""
+        return "Rating({}, {}, {})".format(self.user_id, self.movie_id, self.score)
 
 class User(db.Model, UserMixin):
     """
