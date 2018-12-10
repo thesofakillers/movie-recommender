@@ -27,7 +27,8 @@ def profile():
 @login_required
 # where user may browse movies and rate them
 def browse():
-    return render_template('browse.html', title='Browse')
+    movies = Movie.query.all()
+    return render_template('browse.html', title='Browse', movies = movies)
 
 
 @app.route("/recommend")
