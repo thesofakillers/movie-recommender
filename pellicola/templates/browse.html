@@ -14,10 +14,16 @@
       </thead>
       <tbody>
         {% for movie in movies %}
-          <tr>
-            <td>{{movie.title}}</td>
-            <td>placeholder</td>
-          </tr>
+        <tr>
+          <td>{{movie.title}}</td>
+          <td>
+            <form method="POST" action="">
+              <input name = "rating_slider" type="range" min="0.5" , max="5" , step="0.5", autocomplete="off">
+              <input type="hidden" name="movie_id" value="{{movie.id}}">
+              <input class="ml-4 btn btn-outline-primary" type="submit" value="Submit">
+            </form>
+          </td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>

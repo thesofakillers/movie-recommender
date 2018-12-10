@@ -6,8 +6,10 @@ Handles the routing of the web app
 from flask import render_template, url_for, flash, redirect, request
 from pellicola import app, db, bcrypt
 from pellicola.forms import RegistrationForm, LoginForm
-from pellicola.models import Rating, User, Movie, MovieGenre
+from pellicola.models import Rating, User, Movie, Genre
 from flask_login import login_user, current_user, logout_user, login_required
+import sys
+
 
 @app.route("/home")
 @app.route("/")
@@ -23,12 +25,27 @@ def profile():
     return render_template('profile.html', title='Profile')
 
 
-@app.route("/browse")
+@app.route("/browse", methods=['GET', 'POST'])
 @login_required
 # where user may browse movies and rate them
 def browse():
-    movies = Movie.query.all()
-    return render_template('browse.html', title='Browse', movies = movies)
+    movies = Movie.query.all()[:10]
+    if request.method == 'POST':
+        form_movie_id = int(request.form['movie_id'])
+        form_rating = float(request.form['rating_slider'])
+        # remove previous rating for this movie by this user from database
+        Rating.query.filter_by(movie_id=form_movie_id, user_id=current_user.id).delete()
+
+        # add rating to database
+        rating = Rating(user_id = current_user.id, movie_id = form_movie_id, score=form_rating)
+        rating.movie = Movie.query.filter_by(id=form_movie_id).first()
+        current_user.movies.append(rating)
+        db.session.commit()
+        # create a succesful alert message
+        flash("You succesfully rated {} as a {}/5.0!".format(rating.movie.title, rating.score), "success")
+        # and redirect the user to profile page where they should see their rating preferences
+        return redirect(url_for('profile'))
+    return render_template('browse.html', title='Browse', movies=movies)
 
 
 @app.route("/recommend")
@@ -80,14 +97,14 @@ def login():
         # check if email exists and whether the passwords match
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             # login user
-            login_user(user, remember = form.remember.data)
+            login_user(user, remember=form.remember.data)
             # redirect back to where user was trying to go
             next_page = request.args.get('next')
-            if next_page: # if the user was tryin to go somewhere
+            if next_page:  # if the user was tryin to go somewhere
                 return redirect(next_page)
-            else: # if they weren't just go home
+            else:  # if they weren't just go home
                 return redirect(url_for("home"))
-        else: # if login fails
+        else:  # if login fails
             # provide feedback
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title="Log In", form=form)
