@@ -58,7 +58,7 @@ class Movie(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
-    genres = db.relationship('MovieGenre', backref='movie', lazy='dynamic')
+    genres = db.relationship('Genre', backref='movie', lazy='dynamic')
     users = db.relationship('Rating',
                              back_populates='movie')
 
@@ -67,7 +67,7 @@ class Movie(db.Model):
         return "Movie({}, {})".format(self.id, self.title)
 
 
-class MovieGenre(db.Model):
+class Genre(db.Model):
     """
     Resolves Many to Many relationship between movies and genres
     Is related to:
@@ -79,4 +79,4 @@ class MovieGenre(db.Model):
 
     def __repr__(self):
         """Define what the class should look like when printing out instance"""
-        return "MovieGenre({}, {})".format(self.movie_id, self.genre)
+        return "Genre({}, {})".format(self.movie_id, self.genre)

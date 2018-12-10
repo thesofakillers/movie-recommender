@@ -1,6 +1,6 @@
 from tabulate import tabulate
 from pellicola import db
-from pellicola.models import Rating, User, Movie, MovieGenre
+from pellicola.models import Rating, User, Movie, Genre
 import pandas as pd
 
 engine = db.engine
@@ -36,10 +36,9 @@ movies_df.columns = Movie.__table__.columns.keys() + ['genres']
 # remove unnescessary column
 movies_df = movies_df.drop(columns=['genres'])
 
-
 # writing to database
 movies_df.to_sql('movie', con=engine, if_exists='append', index=False)
-movie_genre_df.to_sql('moviegenre', con=engine,
+movie_genre_df.to_sql('genre', con=engine,
                       if_exists='append', index=False)
 ratings_df.to_sql('rating', con=engine, if_exists='append', index=False)
 users_df.to_sql('user', con=engine, if_exists='append', index=False)
