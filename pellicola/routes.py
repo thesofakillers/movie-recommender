@@ -29,7 +29,7 @@ def profile():
 @login_required
 # where user may browse movies and rate them
 def browse():
-    movies = Movie.query.all()[:10]
+    movies = Movie.query.all()
     if request.method == 'POST':
         form_movie_id = int(request.form['movie_id'])
         form_rating = float(request.form['rating_slider'])
