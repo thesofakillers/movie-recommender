@@ -1,10 +1,12 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Browse Movies</h1>
+<h1 class= "display-2">
+  <a class="logo" href="{{url_for('browse')}}">Browse Movies</a>
+</h1>
 <div class="row">
 <div class="col-3">
 </div>
-<div class="col text-justify">
+<div class="col text-justify lead">
   <p>Welcome to the Browse page. Here you may peruse our movie database and
     rate movies that you have watched. The slider operates on a 0.5 - 5.0 point scale with
     0.5 steps. The further to the right, the closer to a score of 5. Please make sure to press
