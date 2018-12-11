@@ -1,6 +1,19 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Browse Movies and Rate them</h1>
+<h1>Browse Movies</h1>
+<div class="row">
+<div class="col-3">
+</div>
+<div class="col text-justify">
+  <p>Welcome to the Browse page. Here you may peruse our movie database and
+    rate movies that you have watched. The slider operates on a 0.5 - 5.0 point scale with
+    0.5 steps. The further to the right, the closer to a score of 5. Please make sure to press
+    submit once you are happy with the score you have selected for the given film. <strong>Enjoy!</strong>
+  </p>
+</div>
+<div class="col-3">
+</div>
+</div>
 <div class="row">
   <div class="col-3">
   </div>
@@ -40,4 +53,15 @@
   <div class="col-2">
   </div>
 </div>
+<script type="text/javascript"">
+  $(document).ready(function() {
+    var table = $('#browse-table')
+    table.DataTable();
+    var feedback = $('#loading-message');
+    feedback.removeClass("alert-warning");
+    feedback.addClass("alert-success");
+    feedback.html("Thank you for Waiting <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+    table.fadeIn(400);
+  });
+</script>
 {% endblock content %}
