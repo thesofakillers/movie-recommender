@@ -42,7 +42,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(254), unique=True, nullable=True)
     password = db.Column(db.String(60), nullable=True)
     movies = db.relationship('Rating',
-                             back_populates='user')
+                             back_populates='user', lazy='dynamic')
 
     def __repr__(self):
         """Define what the class should look like when printing out instance"""
@@ -60,7 +60,7 @@ class Movie(db.Model):
     title = db.Column(db.String(200), nullable=False)
     genres = db.relationship('Genre', backref='movie', lazy='dynamic')
     users = db.relationship('Rating',
-                             back_populates='movie')
+                             back_populates='movie', lazy = 'dynamic')
 
     def __repr__(self):
         """Define what the class should look like when printing out instance"""
