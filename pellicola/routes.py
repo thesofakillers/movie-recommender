@@ -7,6 +7,7 @@ from flask import render_template, url_for, flash, redirect, request
 from pellicola import app, db, bcrypt
 from pellicola.forms import RegistrationForm, LoginForm
 from pellicola.models import Rating, User, Movie, Genre
+from pellicola.utils import *
 from flask_login import login_user, current_user, logout_user, login_required
 import sys
 
@@ -18,11 +19,20 @@ def home():
     return render_template('home.html')
 
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST'])
 @login_required
 # where personal profile is maintained with movie ratings
 def profile():
-    return render_template('profile.html', title='Profile')
+    # get ratings user has done
+    ratings = Rating.query.join(Rating.movie).filter(Rating.user_id ==current_user.id).all()
+
+    if request.method =="POST":
+        rating = submit_form_rating(request, current_user)
+        # create a succesful alert message
+        flash("You re-succesfully rated {} as a {}/5.0!".format(rating.movie.title,
+                                                             rating.score), "success")
+        return redirect(url_for('profile'))
+    return render_template('profile.html', title='Profile', ratings=ratings)
 
 
 @app.route("/browse", methods=['GET', 'POST'])
@@ -30,19 +40,11 @@ def profile():
 # where user may browse movies and rate them
 def browse():
     movies = Movie.query.all()
-    if request.method == 'POST':
-        form_movie_id = int(request.form['movie_id'])
-        form_rating = float(request.form['rating_slider'])
-        # remove previous rating for this movie by this user from database
-        Rating.query.filter_by(movie_id=form_movie_id, user_id=current_user.id).delete()
-
-        # add rating to database
-        rating = Rating(user_id = current_user.id, movie_id = form_movie_id, score=form_rating)
-        rating.movie = Movie.query.filter_by(id=form_movie_id).first()
-        current_user.movies.append(rating)
-        db.session.commit()
+    if request.method == 'POST': #if user submits a rating
+        rating = submit_form_rating(request, current_user)
         # create a succesful alert message
-        flash("You succesfully rated {} as a {}/5.0!".format(rating.movie.title, rating.score), "success")
+        flash("You succesfully rated {} as a {}/5.0!".format(rating.movie.title,
+                                                             rating.score), "success")
         # and redirect the user to profile page where they should see their rating preferences
         return redirect(url_for('profile'))
     return render_template('browse.html', title='Browse', movies=movies)

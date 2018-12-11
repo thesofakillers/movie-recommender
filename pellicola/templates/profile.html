@@ -3,4 +3,68 @@
 <h1 class="display-2">
   <a class="logo" href="{{url_for('profile')}}">{{ current_user.username }}</a>
 </h1>
+<div class="row">
+<div class="col-3">
+</div>
+<div class="col text-justify lead">
+  <p>Welcome to your Profile page where your rating preferences are displayed.
+    Here you can browse through the films you have previously rated and update their
+    scores if you wish. <strong>Enjoy!</strong>
+  </p>
+</div>
+<div class="col-3">
+</div>
+</div>
+<div class="row">
+  <div class="col-3">
+  </div>
+  <div id = "loading-message" class="col alert alert-warning alert-dismissible fade show">
+    Please wait while we load your preferences...
+  </div>
+  <div class="col-3">
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+  </div>
+  <div class="col">
+    <table id = "preferences-table" class='table collapse display'>
+      <thead class = "table-dark">
+        <tr>
+          <th scope='col'>Movie Title</th>
+          <th scope='col' class="fit">Current Rating</th>
+          <th scope='col' class="fit">Re-rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rating in ratings %}
+        <tr>
+          <td>{{rating.movie.title}}</td>
+          <td>{{rating.score}}</td>
+          <td class= "fit">
+            <form method="POST" action="">
+              <input name = "rating_slider" type="range" min="0.5" , max="5" , step="0.5", autocomplete="off">
+              <input type="hidden" name="movie_id" value="{{rating.movie.id}}">
+              <input class="ml-4 btn btn-outline-primary" type="submit" value="Submit">
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-2">
+  </div>
+</div>
+<script type="text/javascript"">
+  $(document).ready(function() {
+    var table = $('#preferences-table')
+    table.DataTable();
+    var feedback = $('#loading-message');
+    feedback.removeClass("alert-warning");
+    feedback.addClass("alert-success");
+    feedback.html("Thank you for Waiting <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+    table.fadeIn(400);
+  });
+</script>
 {% endblock content %}
