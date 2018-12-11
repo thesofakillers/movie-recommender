@@ -24,13 +24,18 @@ def home():
 # where personal profile is maintained with movie ratings
 def profile():
     # get ratings user has done
-    ratings = Rating.query.join(Rating.movie).filter(Rating.user_id ==current_user.id).all()
-
-    if request.method =="POST":
-        rating = submit_form_rating(request, current_user)
-        # create a succesful alert message
-        flash("You re-succesfully rated {} as a {}/5.0!".format(rating.movie.title,
-                                                             rating.score), "success")
+    ratings = Rating.query.filter_by(user_id=current_user.id).all()
+    if request.method == "POST":
+        if request.form['form-submit'] == 'Re-Rate':
+            rating = submit_form_rating(request, current_user)
+            # create a succesful alert message
+            flash("You succesfully re-rated {} as a {}/5.0!".format(rating.movie.title,
+                                                                    rating.score), "success")
+        elif request.form['form-submit'] == 'Delete':
+            deleted_movie = delete_form_rating(request, current_user)
+            # create a succesful alert message
+            flash("You succesfully removed your rating for {}".format(
+                deleted_movie.title), 'success')
         return redirect(url_for('profile'))
     return render_template('profile.html', title='Profile', ratings=ratings)
 
@@ -40,7 +45,7 @@ def profile():
 # where user may browse movies and rate them
 def browse():
     movies = Movie.query.all()
-    if request.method == 'POST': #if user submits a rating
+    if request.method == 'POST':  # if user submits a rating
         rating = submit_form_rating(request, current_user)
         # create a succesful alert message
         flash("You succesfully rated {} as a {}/5.0!".format(rating.movie.title,
