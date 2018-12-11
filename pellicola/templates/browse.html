@@ -2,21 +2,30 @@
 {% block content %}
 <h1>Browse Movies and Rate them</h1>
 <div class="row">
+  <div class="col-3">
+  </div>
+  <div id = "loading-message" class="col alert alert-warning alert-dismissible fade show">
+    Please wait while we load our database...
+  </div>
+  <div class="col-3">
+  </div>
+</div>
+<div class="row">
   <div class="col-2">
   </div>
   <div class="col">
-    <table class='table table-dark'>
-      <thead>
+    <table id = "browse-table" class='table collapse display'>
+      <thead class = "table-dark">
         <tr>
-          <th scope='col'>Movie Title</th>
-          <th scope='col'>Rating</th>
+          <th scope='col' class="fit">Movie Title</th>
+          <th scope='col' class="fit">Rating</th>
         </tr>
       </thead>
       <tbody>
         {% for movie in movies %}
         <tr>
           <td>{{movie.title}}</td>
-          <td>
+          <td class= "fit">
             <form method="POST" action="">
               <input name = "rating_slider" type="range" min="0.5" , max="5" , step="0.5", autocomplete="off">
               <input type="hidden" name="movie_id" value="{{movie.id}}">

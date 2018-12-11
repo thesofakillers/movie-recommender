@@ -104,3 +104,9 @@ i {
 .jumbotron {
   background-color: inherit;
 }
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
