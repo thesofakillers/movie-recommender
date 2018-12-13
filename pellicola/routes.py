@@ -60,16 +60,15 @@ def browse():
 # where movie reccomendations will be handled
 def recommend():
     # get recommendation ids
-    try: # if the user has not rated anything yet
-        rec_ids = get_recommendations(Rating, current_user.id)
-    except KeyError: # let them know, and redirect to browse page
-        flash("Unfortunately we cannot recommend you anything if you have \
-        not rated anything yet! We don't know your taste!", "danger")
+    # if the user has not rated enough moviesanything yet
+    if len(Rating.query.filter_by(user_id = current_user.id).all()) < 5:
+        # let them know
+        flash("Unfortunately we are not yet confident with our recommendations.\
+        Please rate at least 5 movies so we can get to know your taste!", "danger")
+        # and redirect to browse page
         return redirect(url_for('browse'))
-    # get equivalent movies
-    rec_movies = Movie.query.filter(Movie.id.in_(rec_ids)).all()
-    # make sure they are in the right order
-    rec_movies = sorted(rec_movies, key=lambda dbMovie: rec_ids.index(dbMovie.id))
+    else:
+        rec_movies = get_recommendations(Rating, Movie, current_user.id)
     return render_template('recommend.html', title='For You', rec_movies=rec_movies)
 
 

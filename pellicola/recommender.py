@@ -1,8 +1,7 @@
 import pandas as pd
-from pellicola import app, db
 import numpy as np
 from scipy.sparse.linalg import svds
-
+import sys
 
 def get_utility_matrix(RatingModel):
     """
@@ -101,7 +100,7 @@ def get_recommended_movies(prediction_matrix, utility_matrix, user_id):
     user_mean = utility_matrix.loc[user_id].mean()
 
     # keep only positive recommendations
-    recommended_movies = recommended_movies[recommended_movies>user_mean]
+    recommended_movies = recommended_movies[recommended_movies > user_mean]
 
     return recommended_movies
 
@@ -109,7 +108,7 @@ def get_recommended_movies(prediction_matrix, utility_matrix, user_id):
 from pellicola.models import Rating
 
 
-def get_recommendations(RatingModel, user_id):
+def get_recommendations(RatingModel, MovieModel, user_id):
     """
     Gets a list of recommended movie_ids for a given user
 
@@ -118,8 +117,8 @@ def get_recommendations(RatingModel, user_id):
     -user_id: Integer specifying id of user asking for recommendations
 
     Outputs:
-    -recommendations: sorted list of recommended movie ids, with indices
-    corresponding to movie ID and values to predicted rating
+    -recommended_movies: list of recommended movie instances, sorted from
+    most likely to be recommended to least likely
     """
     # calculate utility matrix
     util_matrix = get_utility_matrix(RatingModel)
@@ -127,5 +126,14 @@ def get_recommendations(RatingModel, user_id):
     pred_mat = make_predictions(util_matrix)
     # get sorted list of recommendations from these two for specific user
     recommendations = get_recommended_movies(pred_mat, util_matrix, user_id)
-    # return only the movie_ids
-    return recommendations.index.tolist()
+    # keep only the movie_ids
+    recommendation_ids = recommendations.index.tolist()
+    print(recommendation_ids, file=sys.stderr)
+    # get equivalent movies
+    recommended_movies = MovieModel.query.filter(
+        MovieModel.id.in_(recommendation_ids)).all()
+    # make sure they are in the right order
+    recommended_movies = sorted(
+        recommended_movies, key=lambda dbMovie: recommendation_ids.index(dbMovie.id))
+
+    return recommended_movies
