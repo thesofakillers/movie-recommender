@@ -97,6 +97,12 @@ def get_recommended_movies(prediction_matrix, utility_matrix, user_id):
     # remove already rated movies from recommended list
     recommended_movies = recommended_movies.drop(rated)
 
+    # get user mean
+    user_mean = utility_matrix.loc[user_id].mean()
+
+    # keep only positive recommendations
+    recommended_movies = recommended_movies[recommended_movies>user_mean]
+
     return recommended_movies
 
 
@@ -112,7 +118,7 @@ def get_recommendations(RatingModel, user_id):
     -user_id: Integer specifying id of user asking for recommendations
 
     Outputs:
-    -recommendations: sorted Pandas Series of recommended movies, with indices
+    -recommendations: sorted list of recommended movie ids, with indices
     corresponding to movie ID and values to predicted rating
     """
     # calculate utility matrix
@@ -121,12 +127,5 @@ def get_recommendations(RatingModel, user_id):
     pred_mat = make_predictions(util_matrix)
     # get sorted list of recommendations from these two for specific user
     recommendations = get_recommended_movies(pred_mat, util_matrix, user_id)
-    return recommendations
-
-
-# rec_movies = get_recommendations(Rating, 611)
-#
-# movie_ids = rec_movies.index.tolist()
-#
-# for i, v in rec_movies.head().items():
-#     print(i, v)
+    # return only the movie_ids
+    return recommendations.index.tolist()
