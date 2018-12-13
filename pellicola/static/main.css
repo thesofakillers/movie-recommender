@@ -87,8 +87,8 @@ i {
   color: #ffffff;
 }
 
-.site-header .navbar-nav .nav-link:hover {
-  color: #ffdb58;
+.site-header a:hover {
+  color: #ffdb58 !important;
 }
 
 .logo {
