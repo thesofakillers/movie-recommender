@@ -45,7 +45,11 @@
       <tbody>
         {% for movie in rec_movies %}
         <tr>
-          <td>{{movie.title}}</td>
+          <td>
+            <a href="{{'https://www.google.com/search?q={}'.format(movie.title)}}" target="_blank">
+              {{movie.title}}
+            </a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
