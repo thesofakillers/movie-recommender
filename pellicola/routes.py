@@ -8,6 +8,7 @@ from pellicola import app, db, bcrypt
 from pellicola.forms import RegistrationForm, LoginForm
 from pellicola.models import Rating, User, Movie, Genre
 from pellicola.utils import *
+from pellicola.recommender import get_recommendations
 from flask_login import login_user, current_user, logout_user, login_required
 import sys
 
@@ -50,8 +51,7 @@ def browse():
         # create a succesful alert message
         flash("You succesfully rated {} as a {}/5.0!".format(rating.movie.title,
                                                              rating.score), "success")
-        # and redirect the user to profile page where they should see their rating preferences
-        return redirect(url_for('profile'))
+        return redirect(url_for('browse'))
     return render_template('browse.html', title='Browse', movies=movies)
 
 
@@ -59,7 +59,18 @@ def browse():
 @login_required
 # where movie reccomendations will be handled
 def recommend():
-    return render_template('recommend.html', title='For You')
+    # get recommendation ids
+    try: # if the user has not rated anything yet
+        rec_ids = get_recommendations(Rating, current_user.id)
+    except KeyError: # let them know, and redirect to browse page
+        flash("Unfortunately we cannot recommend you anything if you have \
+        not rated anything yet! We don't know your taste!", "danger")
+        return redirect(url_for('browse'))
+    # get equivalent movies
+    rec_movies = Movie.query.filter(Movie.id.in_(rec_ids)).all()
+    # make sure they are in the right order
+    rec_movies = sorted(rec_movies, key=lambda dbMovie: rec_ids.index(dbMovie.id))
+    return render_template('recommend.html', title='For You', rec_movies=rec_movies)
 
 
 @app.route("/register", methods=['GET', 'POST'])

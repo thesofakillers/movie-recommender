@@ -1,4 +1,66 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Movie Recommendations</h1>
+<h1 class="display-2">
+  <a class="logo" href="{{url_for('recommend')}}">Recommendations for You</a>
+</h1>
+<div class="row">
+  <div class="col-3">
+  </div>
+  <div class="col text-justify">
+    <p class="lead">Welcome to your Recommendations page where you will find
+      our suggestions for movies we believe you will enjoy. These are presented
+      in descending order from most likely to least likely. <strong>Enjoy!</strong>
+    </p>
+    <p class="small">...Psst! Are your recommendations not making much sense?
+      Ensure you rate movies you like AND movies you don't like, otherwise it
+      will be hard for us to get an idea of your taste. Also! the more movies
+      you rate, the better we'll get!
+    </p>
+  </div>
+  <div class="col-3">
+  </div>
+</div>
+<div class="row">
+  <div class="col-3">
+  </div>
+  <div id="loading-message" class="col alert alert-warning alert-dismissible fade show">
+    Apologies for the delay...
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div>
+  <div class="col-3">
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+  </div>
+  <div class="col">
+    <table id="suggestions-table" class='table collapse display'>
+      <thead class="table-dark">
+        <tr>
+          <th scope='col'>Movie Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for movie in rec_movies %}
+        <tr>
+          <td>{{movie.title}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-2">
+  </div>
+</div>
+<script type="text/javascript"">
+  $(document).ready(function() {
+  var table = $('#suggestions-table')
+  table.DataTable({
+      "ordering": false
+    });
+  table.fadeIn(400);
+  });
+</script>
 {% endblock content %}
