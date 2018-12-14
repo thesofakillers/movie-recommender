@@ -19,13 +19,16 @@ This work is made for [Python 3.5](https://www.python.org/downloads/release/pyth
 The following packages should be installed:
 - [NumPy](http://www.numpy.org/)
 - [Pandas](https://pandas.pydata.org/)
+- [SciPy](https://www.scipy.org/)
 - [Flask](http://flask.pocoo.org/)
 - [flask_sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
 - [flask_bcrypt](https://flask-bcrypt.readthedocs.io/en/latest/)
 - [flask_login](https://flask-login.readthedocs.io/en/latest/)
 - [flask_wtf](https://flask-wtf.readthedocs.io/en/stable/)
+- [wtforms](https://wtforms.readthedocs.io/en/stable/)
 
 These can all be installed via [pip](https://pypi.org/project/pip/) with `pip3 install --user <package_name>`.
+NB underscores should be changed to hyphens when installing.
 
 ## Usage
 1. In a shell, ensure you are in [movie-recommender/](/../../).
