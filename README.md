@@ -23,7 +23,7 @@ The following packages should be installed:
 These can all be installed via [pip](https://pypi.org/project/pip/) with `pip3 install --user <package_name>`.
 
 ## Usage
-1. In a shell, ensure you are in [movie-recommender/](movie-recommender/).
+1. In a shell, ensure you are in [movie-recommender/](/../../).
 2. Enter `python3 run.py`.
 3. In a browser, navigate to the address shown in the terminal, usually `http://127.0.0.1:5000/`
 4. The website itself has the rest of the instructions
