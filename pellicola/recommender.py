@@ -128,7 +128,6 @@ def get_recommendations(RatingModel, MovieModel, user_id):
     recommendations = get_recommended_movies(pred_mat, util_matrix, user_id)
     # keep only the movie_ids
     recommendation_ids = recommendations.index.tolist()
-    print(recommendation_ids, file=sys.stderr)
     # get equivalent movies
     recommended_movies = MovieModel.query.filter(
         MovieModel.id.in_(recommendation_ids)).all()
