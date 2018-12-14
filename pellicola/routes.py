@@ -1,14 +1,13 @@
 """
 Handles the routing of the web app
 """
-
-
 from flask import render_template, url_for, flash, redirect, request
 from pellicola import app, db, bcrypt
 from pellicola.forms import RegistrationForm, LoginForm
 from pellicola.models import Rating, User, Movie, Genre
 from pellicola.utils import *
 from pellicola.recommender import get_recommendations
+from pellicola.personalizer import construct_personalized_message, genre_thing_dict
 from flask_login import login_user, current_user, logout_user, login_required
 import sys
 
@@ -61,14 +60,20 @@ def browse():
 def recommend():
     # get recommendation ids
     # if the user has not rated enough moviesanything yet
-    if len(Rating.query.filter_by(user_id = current_user.id).all()) < 5:
+    if len(Rating.query.filter_by(user_id=current_user.id).all()) < 5:
         # let them know
         flash("Unfortunately we are not yet confident with our recommendations.\
         Please rate at least 5 movies so we can get to know your taste!", "danger")
         # and redirect to browse page
         return redirect(url_for('browse'))
     else:
+        # get recommended movies
         rec_movies = get_recommendations(Rating, Movie, current_user.id)
+
+        # construct personalizd message for user
+        message = construct_personalized_message(Rating, Genre, current_user)
+        # pass the message to the screen
+        flash(message, "info")
     return render_template('recommend.html', title='For You', rec_movies=rec_movies)
 
 
