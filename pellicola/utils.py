@@ -1,6 +1,9 @@
+"""
+Module containing various helper functions utilized in routes.py
+"""
+
 from pellicola.models import Rating, User, Movie, Genre
 from pellicola import app, db, bcrypt
-import sys
 
 def get_form_info(req):
     """

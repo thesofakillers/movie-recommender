@@ -1,3 +1,7 @@
+"""
+Module containing functions/objects having to do with personalization logic
+"""
+
 from collections import Counter
 import random
 from flask import Markup

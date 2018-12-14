@@ -9,7 +9,6 @@ from pellicola.utils import *
 from pellicola.recommender import get_recommendations
 from pellicola.personalizer import construct_personalized_message, genre_thing_dict
 from flask_login import login_user, current_user, logout_user, login_required
-import sys
 
 
 @app.route("/home")

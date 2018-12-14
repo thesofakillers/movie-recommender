@@ -1,7 +1,10 @@
+"""
+Module containing functions having to do with recommendation logic
+"""
+
 import pandas as pd
 import numpy as np
 from scipy.sparse.linalg import svds
-import sys
 
 def get_utility_matrix(RatingModel):
     """

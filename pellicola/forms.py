@@ -1,11 +1,13 @@
-#<section>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Imports~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+module containing form classes, mostly necessary for login/logout functionality
+"""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from pellicola.models import User
-#</section> End of Imports
 
-#<section>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Classes~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 class RegistrationForm(FlaskForm):
     """
     Defines the required fields and validators for a registration form instance
@@ -41,4 +43,3 @@ class LoginForm(FlaskForm):
                              validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
-#</section> End of Classes

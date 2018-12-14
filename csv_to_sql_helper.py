@@ -1,12 +1,16 @@
+"""
+Module utilized to populate SQLAlchemy database from MovieLens csv files
+"""
 from tabulate import tabulate
 from pellicola import db
 from pellicola.models import Rating, User, Movie, Genre
 import pandas as pd
 
+# get SQL Alchemy engine
 engine = db.engine
 
+# specify where csv files are
 csv_folder = "ml-latest-small/"
-
 
 # read the movies csv file
 movies_df = pd.read_csv(csv_folder + "movies.csv")
